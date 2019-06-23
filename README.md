@@ -1,85 +1,83 @@
-Supported tags and respective `Dockerfile` links
-================================================
+# Welcome to Docker Qbittorrent
 
-  * [`latest` is the latest release built from source code on Alpine Linux (currently >4.1.x)](https://github.com/wernight/docker-qbittorrent/blob/master/Dockerfile) [![](https://images.microbadger.com/badges/image/wernight/qbittorrent.svg)](http://microbadger.com/images/wernight/qbittorrent "Get your own image badge on microbadger.com")
-  * [`stable` is the latest packaged stable Debian packaged version (currently 3.3.x)](https://github.com/wernight/docker-qbittorrent/blob/stable/Dockerfile) [![](https://images.microbadger.com/badges/image/wernight/qbittorrent:stable.svg)](http://microbadger.com/images/wernight/qbittorrent "Get your own image badge on microbadger.com")
-  * [`4`, `4.1`, `4.1.0` tagged version built from source code (based on Alpine)](https://github.com/wernight/docker-qbittorrent/blob/v4.1.0/Dockerfile) [![](https://images.microbadger.com/badges/image/wernight/qbittorrent:4.1.0.svg)](http://microbadger.com/images/wernight/qbittorrent "Get your own image badge on microbadger.com")
-  * [`3`, `3.3`, `3.3.13` tagged version built from source code (based on Alpine)](https://github.com/wernight/docker-qbittorrent/blob/v3.3.13/Dockerfile) [![](https://images.microbadger.com/badges/image/wernight/qbittorrent:3.3.13.svg)](http://microbadger.com/images/wernight/qbittorrent "Get your own image badge on microbadger.com")
-  * [`3.3.7` tagged version built from source code (based on Alpine)](https://github.com/wernight/docker-qbittorrent/blob/v3.3.7/Dockerfile) [![](https://images.microbadger.com/badges/image/wernight/qbittorrent:3.3.7.svg)](http://microbadger.com/images/wernight/qbittorrent "Get your own image badge on microbadger.com")
-  * [`3.3.3` tagged version built from source code (based on Debian)](https://github.com/wernight/docker-qbittorrent/blob/v3.3.3/Dockerfile) [![](https://images.microbadger.com/badges/image/wernight/qbittorrent:3.3.3.svg)](http://microbadger.com/images/wernight/qbittorrent "Get your own image badge on microbadger.com")
-  * [`3.3.1` tagged version built from source code (based on Debian)](https://github.com/wernight/docker-qbittorrent/blob/v3.3.1/Dockerfile) [![](https://images.microbadger.com/badges/image/wernight/qbittorrent:3.3.1.svg)](http://microbadger.com/images/wernight/qbittorrent "Get your own image badge on microbadger.com")
+The [qBittorrent](https://www.qbittorrent.org/)  project aims to provide an open-source software alternative to µTorrent.
+Its particularity is to have a web UI to manage your torrents from your server or your RaspberryPi.
 
+Additionally, qBittorrent runs and provides the same features on all major platforms (Linux, macOS, Windows, OS/2, FreeBSD).
 
-What is qBittorrent?
-====================
+qBittorrent is based on the Qt toolkit and  [libtorrent-rasterbar](http://www.libtorrent.org/)  library.
 
-[qBittorrent](http://www.qbittorrent.org/) NoX is the headless with remote web interface version of qBittorrent BitTorrent client.
+# Supported architecture
 
-![qBittorrent logo](https://github.com/wernight/docker-qbittorrent/blob/master/docs/qbittorrent-logo.png?raw=true)
+- arm32 (Raspberry PI v3 B)
+- arm64 (Raspberry PI v3 B+)
 
+# Download / Update
 
-How to use this image
-=====================
+```bash
+docker pull maltyxx/qbittorrent:latest
+```
 
-This image is:
+#  Usage
 
-  * **Small**: `:latest` is based on official [Alpine](https://registry.hub.docker.com/_/alpine/) Docker image.
-  * **Simple**: Exposes correct ports, configured for remote access...
-  * **Secure**: Runs as non-root user with random UID/GID `520`, and handles correctly PID 1 (using dumb-init).
+-   `/config`: qBittorrent configuration files
+-   `/torrents`: Torrent files
+-   `/downloads`: Download location
 
-Usage
------
+By default it runs as UID 520 and GID 520, but can run as any user/group.
 
-All mounts and ports are optional and qBittorrent will work even with only:
+It is probably a good idea to add  `--restart=always`  so the container restarts if it goes down.
 
-    $ docker run wernight/qbittorrent
+You can change  `6081`  to some random port number (also change in the settings).
 
-... however that way some ports used to connect to peers are not exposed, accessing the
-web interface requires you to proxy port 8080, and all settings as well as downloads will
-be lost if the container is removed. So start it using this command:
+```bash
+docker run \
+-p 8080:8080/tcp \
+-p 6881:6881 \
+-v <volume_config>:/config \
+-v <volume_torrent>:/torrents \
+-v <volume_download>:/downloads \
+maltyxx/qbittorrent:4.1.6-arm32
+```
 
-    $ mkdir -p config torrents downloads
-	$ docker run -d --user $UID:$GID \
-		-p 8080:8080 -p 6881:6881/tcp -p 6881:6881/udp \
-		-v $PWD/config:/config \
-		-v $PWD/torrents:/torrents \
-		-v $PWD/downloads:/downloads \
-		wernight/qbittorrent
+## Exemple for Raspberry PI V3 B
 
-... to run as yourself and have WebUI running on [http://localhost:8080](http://localhost:8080)
-(username: `admin`, password: `adminadmin`) with config in the following locations mounted:
+```bash
+docker run \
+-d \
+--name qbittorent \
+--restart=always \
+--log-driver json-file --log-opt max-size=10m \
+-p 8080:8080/tcp \
+-p 6881:6881 \
+-v qbittorrent_config:/config \
+-v qbittorrent_torrent:/torrents \
+-v qbittorrent_downloads:/downloads \
+maltyxx/qbittorrent:4.1.6-arm32
+```
 
-  * `/config`: qBittorrent configuration files
-  * `/torrents`: Torrent files
-  * `/downloads`: Download location
+## WebUI
 
-Note: By default it runs as UID 520 and GID 520, but can run as any user/group.
+Login on the interface [http://localhost:8080](http://localhost:8080/).
 
-It is probably a good idea to add `--restart=always` so the container restarts if it goes down.
+Change your credentials :
+-   `user`: admin
+-   `password`: adminadmin
 
-You can change `6081` to some random  port number (also change in the settings).
+## Image Variants
 
-_Note: For the container to run, the legal notice had to be automatically accepted. By running the container, you are accepting its terms. Toggle the flag in `qBittorrent.conf` to display the notice again._
+`maltyxx/qbittorrent:latest`
 
-_Note: `520` was chosen randomly to prevent running as root or as another known user on your system; at least until [issue #11253](https://github.com/docker/docker/pull/11253) is fixed._
+The last version
 
-Image Variants
---------------
+### x86_64
 
-### `wernight/qbittorrent:latest`
+`maltyxx/qbittorrent:<version>`
 
-Latest release of qBittorrent (No X) compiled on Alpine Linux from source code.
+amd64 version
+ 
+### ARM
 
-### `wernight/qbittorrent:<version>`
+`maltyxx/qbittorrent:<version>-<arch>`
 
-Those are tagged versions built from source code. Older versions are based on Debian while newer ones are based on Alpine Linux (just like `:latest`).
-
-### `wernight/qbittorrent:stable`
-
-Works like `:latest` but based on Debian using only the package manager to install it. It's **more tested**, by Debian and package manager, but the image is *larger* than the one based on Alpine and it's an *older* version.
-
-
-User Feedbacks
-==============
-
-Having more issues? [Report a bug on GitHub](https://github.com/wernight/docker-qbittorrent/issues).
+arm version
