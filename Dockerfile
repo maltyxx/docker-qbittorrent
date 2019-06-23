@@ -52,7 +52,7 @@ RUN set -x \
     && tar -xzv -C /tmp -f /tmp/qBittorrent-$QBITTORRENT_VERSION.tgz \
     && cd /tmp/qBittorrent-release-$QBITTORRENT_VERSION \
     # Compile
-    && PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig ./configure --disable-gui --disable-stacktrace \
+    && PKG_CONFIG_PATH=/usr/local/lib/pkgconfig ./configure --disable-gui --disable-stacktrace \
     && make -j$(nproc) \
     && make install \
     # Clean-up
