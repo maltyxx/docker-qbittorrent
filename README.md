@@ -9,6 +9,7 @@ qBittorrent is based on the Qt toolkit and  [libtorrent-rasterbar](http://www.li
 
 # Supported architecture
 
+- x86_64
 - arm32 (Raspberry PI v3 B)
 - arm64 (Raspberry PI v3 B+)
 
@@ -37,7 +38,7 @@ docker run \
 -v <volume_config>:/config \
 -v <volume_torrent>:/torrents \
 -v <volume_download>:/downloads \
-maltyxx/qbittorrent:4.1.6-arm32
+maltyxx/qbittorrent:4.1.6
 ```
 
 ## Exemple for Raspberry PI V3 B
@@ -53,7 +54,7 @@ docker run \
 -v qbittorrent_config:/config \
 -v qbittorrent_torrent:/torrents \
 -v qbittorrent_downloads:/downloads \
-maltyxx/qbittorrent:4.1.6-arm32
+maltyxx/qbittorrent:4.1.6
 ```
 
 ## WebUI
