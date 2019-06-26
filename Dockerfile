@@ -22,7 +22,7 @@ RUN set -x \
         cmake \
         g++ \
         make \
-        libressl-dev \
+        openssl-dev \
     # Build lib rasterbar from source code (required by qBittorrent)
     # Until https://github.com/qbittorrent/qBittorrent/issues/6132 is fixed, need to use version 1.0.*
     && curl -L -o /tmp/libtorrent-rasterbar-$LIBTORRENT_VERSION.tar.gz "https://github.com/arvidn/libtorrent/releases/download/libtorrent-$(echo $LIBTORRENT_VERSION|tr '.' '_')/libtorrent-rasterbar-$LIBTORRENT_VERSION.tar.gz" \
@@ -41,11 +41,11 @@ RUN set -x \
 RUN set -x \
     # Install build dependencies
     && apk add --no-cache -t .build-deps \
-        curl \
         boost-dev \
+        curl \
         g++ \
         make \
-        libressl-dev \
+        openssl-dev \
         qt5-qttools-dev \
     # Build qBittorrent from source code
     && curl -L -o /tmp/qBittorrent-$QBITTORRENT_VERSION.tgz https://github.com/qbittorrent/qBittorrent/archive/release-$QBITTORRENT_VERSION.tar.gz \
