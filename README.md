@@ -1,6 +1,6 @@
 # Welcome to Docker Qbittorrent
 
-The [qBittorrent](https://www.qbittorrent.org/)  project aims to provide an open-source software alternative to µTorrent.
+The [qBittorrent](https://www.qbittorrent.org/) project aims to provide an open-source software alternative to µTorrent.
 Its particularity is to have a web UI to manage your torrents from your server or your RaspberryPi.
 
 Additionally, qBittorrent runs and provides the same features on all major platforms (Linux, macOS, Windows, OS/2, FreeBSD).
@@ -11,7 +11,7 @@ qBittorrent is based on the Qt toolkit and  [libtorrent-rasterbar](http://www.li
 
 - x86_64
 - arm32 (Raspberry PI v3 B)
-- arm64 (Raspberry PI v3 B+)
+- arm64 (Raspberry PI v3 B+ / Raspberry PI v4)
 
 # Download / Update
 
@@ -41,7 +41,7 @@ docker run \
 maltyxx/qbittorrent:4.1.6
 ```
 
-## Exemple for Raspberry PI V3 B
+## Exemple
 
 ```bash
 docker run \
