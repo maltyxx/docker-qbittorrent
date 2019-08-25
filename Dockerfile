@@ -83,8 +83,7 @@ RUN set -x && \
         /downloads
 
 # Default configuration file.
-COPY root/default/qBittorrent.conf /default/qBittorrent.conf
-COPY root/entrypoint.sh /
+COPY root/ /
 
 ENV HOME="/home/qbittorrent/"
 ENV QBITTORRENT_UID=520
