@@ -1,7 +1,7 @@
 FROM alpine:3.9
 
 ARG LIBTORRENT_VERSION=1.1.10
-ARG QBITTORRENT_VERSION=4.1.7
+ARG QBITTORRENT_VERSION=4.2.0
 
 # Install required packages
 RUN apk add --no-cache \
@@ -83,7 +83,7 @@ RUN set -x && \
         /downloads
 
 # Default configuration file.
-COPY root/ /
+ADD rootfs/ /
 
 ENV HOME="/home/qbittorrent/"
 ENV QBITTORRENT_UID=520

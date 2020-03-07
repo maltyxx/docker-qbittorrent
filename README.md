@@ -7,11 +7,12 @@ Additionally, qBittorrent runs and provides the same features on all major platf
 
 qBittorrent is based on the Qt toolkit and  [libtorrent-rasterbar](http://www.libtorrent.org/)  library.
 
-# Supported architecture
+# Supported multi architectures
 
-- x86_64 (Ex: Synology DS218+..)
-- arm32  (Ex: Raspberry PI v3 B..)
-- arm64  (Ex: Raspberry PI v3 B+ / Raspberry PI v4 B..)
+- i386
+- amd64 (Ex: Synology DS218+..)
+- arm32 (Ex: Raspberry PI v3 B..)
+- arm64 (Ex: Raspberry PI v3 B+ / Raspberry PI v4 B..)
 
 # Download / Update
 
@@ -41,7 +42,7 @@ docker run \
 maltyxx/qbittorrent:latest
 ```
 
-## Exemple for a Raspberry 3 B+
+## Exemple for a Raspberry 4 B
 
 ```bash
 docker run \
@@ -57,7 +58,7 @@ docker run \
 -e TZ=Europe/Paris \
 -e QBITTORRENT_UID=520 \
 -e QBITTORRENT_GID=520 \
-maltyxx/qbittorrent:4.1.7-arm64
+maltyxx/qbittorrent:latest
 ```
 
 ## WebUI
@@ -68,20 +69,3 @@ Change your credentials :
 -   `user`: admin
 -   `password`: adminadmin
 
-## Image Variants
-
-`maltyxx/qbittorrent:latest`
-
-The last version
-
-### x86_64
-
-`maltyxx/qbittorrent:<version>`
-
-amd64 version
- 
-### ARM
-
-`maltyxx/qbittorrent:<version>-<arch>`
-
-arm version
