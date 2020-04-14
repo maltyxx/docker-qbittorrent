@@ -1,8 +1,8 @@
 #!/bin/sh -e
 
 # Default configuration file
-if [ ! -f /config/qBittorrent.conf ]; then
-    cp /default/qBittorrent.conf /config/qBittorrent.conf
+if [ ! -f /qbittorrent/config/qBittorrent.conf ]; then
+    cp /qbittorrent/default/qBittorrent.conf /qbittorrent/config/qBittorrent.conf
 fi
 
 # Setup user/group ids
@@ -23,7 +23,7 @@ if [ ! -z "${QBITTORRENT_GID}" ]; then
 fi
 
 if [ $CHANGE_ID -eq 1 ]; then
-    chown -R -h qbittorrent:qbittorrent /home/qbittorrent /config /torrents /downloads
+    chown -R -h qbittorrent:qbittorrent /home/qbittorrent /qbittorrent
 fi
 
 exec su-exec qbittorrent "$@"

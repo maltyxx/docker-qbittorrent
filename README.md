@@ -22,9 +22,9 @@ docker pull maltyxx/qbittorrent:latest
 
 #  Usage
 
--   `/config`: qBittorrent configuration files
--   `/torrents`: Torrent files
--   `/downloads`: Download location
+-   `/qbittorrent/config`: qBittorrent configuration files
+-   `/qbittorrent/data`: qBittorrent database, logs, GeoIP, RSS...
+-   `/qbittorrent/downloads`: Download location
 
 By default it runs as UID 520 and GID 520, but can run as any user/group.
 
@@ -36,9 +36,9 @@ You can change  `6081`  to some random port number (also change in the settings)
 docker run \
 -p 8080:8080/tcp \
 -p 6881:6881 \
--v <volume_config>:/config \
--v <volume_torrent>:/torrents \
--v <volume_download>:/downloads \
+-v <volume_config>:/qbittorrent/config \
+-v <volume_data>:/qbittorrent/data \
+-v <volume_download>:/qbittorrent/downloads \
 maltyxx/qbittorrent:latest
 ```
 
@@ -52,9 +52,9 @@ docker run \
 --log-driver json-file --log-opt max-size=10m \
 -p 8080:8080/tcp \
 -p 6881:6881 \
--v qbittorrent_config:/config \
--v qbittorrent_torrent:/torrents \
--v qbittorrent_downloads:/downloads \
+-v qbittorrent-config:/qbittorrent/config \
+-v qbittorrent-data:/qbittorrent/data \
+-v qbittorrent-downloads:/qbittorrent/downloads \
 -e TZ=Europe/Paris \
 -e QBITTORRENT_UID=520 \
 -e QBITTORRENT_GID=520 \

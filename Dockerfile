@@ -34,7 +34,7 @@ RUN set -x && \
     mkdir build && \
     cd build && \
     cmake .. && \
-    make -j$(nproc) && \
+    make && \
     make install && \
     # Clean-up
     cd / && \
@@ -57,7 +57,7 @@ RUN set -x && \
     cd /tmp/qBittorrent-release-$QBITTORRENT_VERSION && \
     # Compile
     PKG_CONFIG_PATH=/usr/local/lib/pkgconfig ./configure --disable-gui --disable-stacktrace && \
-    make -j$(nproc) && \
+    make && \
     make install && \
     # Clean-up
     cd / && \
@@ -68,19 +68,18 @@ RUN set -x && \
     adduser -S -D -s /sbin/nologin -G qbittorrent qbittorrent && \
     # Create symbolic links to simplify mounting
     mkdir -p \
+        /qbittorrent \
         /home/qbittorrent/.config/qBittorrent \
         /home/qbittorrent/.local/share/data/qBittorrent \
         /home/qbittorrent/downloads \
     && \
-    ln -s /home/qbittorrent/.config/qBittorrent /config && \
-    ln -s /home/qbittorrent/.local/share/data/qBittorrent /torrents && \
-    ln -s /home/qbittorrent/downloads /downloads && \
+    ln -s /home/qbittorrent/.config/qBittorrent /qbittorrent/config && \
+    ln -s /home/qbittorrent/.local/share/data/qBittorrent /qbittorrent/data && \
+    ln -s /home/qbittorrent/downloads /qbittorrent/downloads && \
     chmod 750 -R /home/qbittorrent && \
     chown -R -h qbittorrent:qbittorrent \
-        /home/qbittorrent \
-        /config \
-        /torrents \
-        /downloads
+        /qbittorrent \
+        /home/qbittorrent
 
 # Default configuration file.
 ADD rootfs/ /
@@ -91,7 +90,7 @@ ENV QBITTORRENT_GID=520
 
 EXPOSE 8080/tcp 6881
 
-VOLUME ["/config", "/torrents", "/downloads"]
+VOLUME ["/qbittorrent/config", "/qbittorrent/data", "/qbittorrent/downloads"]
 
 ENTRYPOINT ["/entrypoint.sh"]
 
