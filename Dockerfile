@@ -12,7 +12,8 @@ RUN apk add --no-cache \
         boost-thread \
         ca-certificates \
         libressl \
-        qt5-qtbase
+        qt5-qtbase \
+        python3
 
 # Compiling qBitTorrent following instructions on
 # https://github.com/qbittorrent/qBittorrent/wiki/Compiling-qBittorrent-on-Debian-and-Ubuntu#Libtorrent
