@@ -1,7 +1,8 @@
-FROM alpine:3.9
+FROM alpine:3.13
 
-ARG LIBTORRENT_VERSION=1.1.10
-ARG QBITTORRENT_VERSION=4.2.0
+ARG NPROC=1
+ARG LIBTORRENT_VERSION=1.2.12
+ARG QBITTORRENT_VERSION=4.3.0
 
 # Install required packages
 RUN apk add --no-cache \
@@ -28,14 +29,13 @@ RUN set -x && \
         openssl-dev \
     && \
     # Build lib rasterbar from source code (required by qBittorrent)
-    # Until https://github.com/qbittorrent/qBittorrent/issues/6132 is fixed, need to use version 1.0.*
-    curl -L -o /tmp/libtorrent-rasterbar-$LIBTORRENT_VERSION.tar.gz "https://github.com/arvidn/libtorrent/releases/download/libtorrent-$(echo $LIBTORRENT_VERSION|tr '.' '_')/libtorrent-rasterbar-$LIBTORRENT_VERSION.tar.gz" && \
-    tar -xzv -C /tmp -f /tmp/libtorrent-rasterbar-$LIBTORRENT_VERSION.tar.gz && \
-    cd /tmp/libtorrent-rasterbar-$LIBTORRENT_VERSION && \
+    curl -L -o /tmp/libtorrent-$LIBTORRENT_VERSION.tar.gz "https://github.com/arvidn/libtorrent/archive/v$LIBTORRENT_VERSION.tar.gz" && \
+    tar -xzv -C /tmp -f /tmp/libtorrent-$LIBTORRENT_VERSION.tar.gz && \
+    cd /tmp/libtorrent-$LIBTORRENT_VERSION && \
     mkdir build && \
     cd build && \
-    cmake .. && \
-    make && \
+    cmake .. -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_INSTALL_LIBDIR=lib && \
+    make -j$NPROC && \
     make install && \
     # Clean-up
     cd / && \
@@ -53,12 +53,12 @@ RUN set -x && \
         qt5-qttools-dev \
     && \
     # Build qBittorrent from source code
-    curl -L -o /tmp/qBittorrent-$QBITTORRENT_VERSION.tgz https://github.com/qbittorrent/qBittorrent/archive/release-$QBITTORRENT_VERSION.tar.gz && \
+    curl -L -o /tmp/qBittorrent-$QBITTORRENT_VERSION.tgz "https://github.com/qbittorrent/qBittorrent/archive/release-$QBITTORRENT_VERSION.tar.gz" && \
     tar -xzv -C /tmp -f /tmp/qBittorrent-$QBITTORRENT_VERSION.tgz && \
     cd /tmp/qBittorrent-release-$QBITTORRENT_VERSION && \
     # Compile
     PKG_CONFIG_PATH=/usr/local/lib/pkgconfig ./configure --disable-gui --disable-stacktrace && \
-    make && \
+    make -j$NPROC && \
     make install && \
     # Clean-up
     cd / && \
