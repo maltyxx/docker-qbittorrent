@@ -9,10 +9,8 @@ qBittorrent is based on the Qt toolkit and  [libtorrent-rasterbar](http://www.li
 
 # Supported multi architectures
 
-- i386
-- amd64 (Ex: Synology DS218+..)
-- arm32 (Ex: Raspberry PI v3 B..)
-- arm64 (Ex: Raspberry PI v3 B+ / Raspberry PI v4 B..)
+- amd64
+- arm64
 
 # Download / Update
 
