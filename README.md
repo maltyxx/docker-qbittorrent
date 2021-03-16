@@ -9,9 +9,8 @@ qBittorrent is based on the Qt toolkit and  [libtorrent-rasterbar](http://www.li
 
 # Supported multi architectures
 
-- armv7
+- armv7 (arm32)
 - armv8 (arm64)
-- 386 (x86)
 - amd64 (x86_64)
 
 # Download / Update
