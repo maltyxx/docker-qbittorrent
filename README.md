@@ -10,9 +10,9 @@ qBittorrent is based on the Qt toolkit and  [libtorrent-rasterbar](http://www.li
 # Supported multi architectures
 
 - armv7
-- amd64
-- 386
-- amd64
+- armv8 (arm64)
+- 386 (x86)
+- amd64 (x86_64)
 
 # Download / Update
 
@@ -68,10 +68,3 @@ Login on the interface [http://localhost:8080](http://localhost:8080/).
 Change your credentials :
 -   `user`: admin
 -   `password`: adminadmin
-
-
-## Build 
-
-```bash
-docker buildx build --pull --platform linux/arm/v7,linux/arm64,linux/amd64 --tag maltyxx/qbittorrent:latest --push .
-```

@@ -1,8 +1,7 @@
 FROM alpine:3.13
 
-ARG NPROC=1
 ARG LIBTORRENT_VERSION=1.2.12
-ARG QBITTORRENT_VERSION=4.3.0
+ARG QBITTORRENT_VERSION=4.3.3
 
 # Install required packages
 RUN apk add --no-cache \
@@ -35,7 +34,7 @@ RUN set -x && \
     mkdir build && \
     cd build && \
     cmake .. -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_INSTALL_LIBDIR=lib && \
-    make -j$NPROC && \
+    make && \
     make install && \
     # Clean-up
     cd / && \
@@ -58,7 +57,7 @@ RUN set -x && \
     cd /tmp/qBittorrent-release-$QBITTORRENT_VERSION && \
     # Compile
     PKG_CONFIG_PATH=/usr/local/lib/pkgconfig ./configure --disable-gui --disable-stacktrace && \
-    make -j$NPROC && \
+    make && \
     make install && \
     # Clean-up
     cd / && \
