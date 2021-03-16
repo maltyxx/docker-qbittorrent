@@ -10,7 +10,7 @@ on:
 
 jobs:
   buildx:
-    runs-on: qbittorrent
+    runs-on: ubuntu-latest
     steps:
       -
         name: Checkout
