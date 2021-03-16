@@ -20,7 +20,7 @@ jobs:
         id: prepare
         run: |
           DOCKER_IMAGE=maltyxx/qbittorrent
-          DOCKER_PLATFORMS=linux/amd64,linux/arm64
+          DOCKER_PLATFORMS=linux/amd64,linux/arm/v7,linux/arm64,linux/386
           VERSION=edge
 
           if [[ $GITHUB_REF == refs/tags/* ]]; then
@@ -37,6 +37,9 @@ jobs:
 
           echo ::set-output name=tags::${TAGS}
           echo ::set-output name=platform::${DOCKER_PLATFORMS}
+      -
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
       -
         name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
