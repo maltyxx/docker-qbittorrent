@@ -11,7 +11,8 @@ qBittorrent is based on the Qt toolkit and  [libtorrent-rasterbar](http://www.li
 
 - armv7
 - amd64
-- arm64
+- 386
+- amd64
 
 # Download / Update
 
@@ -41,7 +42,7 @@ docker run \
 maltyxx/qbittorrent:latest
 ```
 
-## Exemple for a Raspberry 4 B
+## Run
 
 ```bash
 docker run \
@@ -68,3 +69,9 @@ Change your credentials :
 -   `user`: admin
 -   `password`: adminadmin
 
+
+## Build 
+
+```bash
+docker buildx build --pull --platform linux/arm/v7,linux/arm64,linux/amd64 --tag maltyxx/qbittorrent:latest --push .
+```
