@@ -1,7 +1,7 @@
 FROM alpine:3
 
 ARG LIBTORRENT_VERSION=1.2.12
-ARG QBITTORRENT_VERSION=4.3.3
+ARG QBITTORRENT_VERSION=4.3.4.1
 
 # Install required packages
 RUN apk add --no-cache \
